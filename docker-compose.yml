@@ -6,6 +6,6 @@ services:
     ports:
     - "80:8080"
     volumes:
-    - /home/alex/cmpt353/asn2/:usr/scr/app
+    - C:\Users\agorm\GIT\Web1\:/usr/src/app
     stdin_open: true
     tty: true

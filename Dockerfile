@@ -12,7 +12,9 @@ COPY *.json .
 COPY server.js .
 COPY pages/* pages
 
+# RUN apk update && apk add bash
+RUN npm install express
 RUN npm add express
 RUN npm add body-parser
 
-CMD ["node", "server.js"]
+CMD ["/bin/bash"]

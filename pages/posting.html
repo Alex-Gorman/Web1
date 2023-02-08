@@ -11,19 +11,77 @@
 
     <body>
 
+    <script type = "text/javascript">
+
+        function sayHello() {
+            var http = new XMLHttpRequest();
+            var url = '/sayHello';
+            // var params = 'name=' + document.getElementById("input").value;
+            var params = 'topic=' + document.getElementById("topic").value
+            + '&data=' + document.getElementById("data").value;
+                
+            http.open('POST', url, true);
+
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+
+                    alert("message received!");
+                    // var response = JSON.parse(http.responseText);
+                    // document.getElementById("answer").value = response.answer;  
+                }
+            };
+
+            http.send(params);
+            };
+
+        // second function to update
+        function getData() {
+            var http = new XMLHttpRequest();
+            var url = '/getData';
+
+            http.open('GET', url, true);
+
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+
+                    // alert("message received!");
+                    var response = JSON.parse(http.responseText); 
+                    document.getElementById("answer").value = response.answer; 
+                    
+                }
+            };
+
+            http.send();
+            setTimeout('getData()', 100);
+        }
+
+    getData();
+
+    </script>
+
         <h1>Postings</h1>
 
-        <p> <iframe src = "posts.txt" height = 400 width = 95%></iframe></p>
+        <!-- <p> <iframe src = "posts.txt" height = 400 width = 95%></iframe></p> -->
 
-        <button type = "button">Create New Post</button>
+        <p></p>
 
-        <script type = "text/javascript" >
+        <input id="topic" type="text" name="topic">
 
-            // fetch ("posts.txt")
+        <br><br>
 
-            
+        <input id="data" type="text" name="data">
 
-        </script>
+        <br><br>
+
+        <button onclick="sayHello()">Create New Post</button>
+
+        <br><br>
+
+        <textarea id = "answer" rows = "20" cols = "50"> </textarea>
 
 
     </body>

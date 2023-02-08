@@ -2,25 +2,13 @@
 
 // load package
 const express = require('express');
+const bodyParser = require("body-parser");
 
 const PORT = 8080;
 const HOST = '0.0.0.0';
 const app = express();
 
-// app.get('/greeting', (req, res) => {
-//     res.send('hello');
-// })
-
-// app.use('/', express.static('pages'));
-
-// app.listen(PORT, HOST);
-
-// console.log('up and running');
-
-
-
 /* Actual Code */
-
 const fs = require('fs');
 
 /* Path to check */
@@ -33,6 +21,8 @@ if (fs.existsSync(path)) {
     console.log('Creating file');
     fs.writeFile('posts.txt', '', function(){});
 }
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 function postMethod(topic, data) {
     let today = new Date();
@@ -54,7 +44,42 @@ function postMethod(topic, data) {
     + ' -> ' +timestamp + '\n', function(){});
 }
 
-postMethod('test2', 'hello');
+// postMethod('test2', 'hello');
+
+app.post('/sayHello', (req, res) => {
+    var topic = req.body.topic;
+    var data = req.body.data;
+
+    // console.log(topic, data);
+
+    postMethod(topic, data);
+    var response = new Object();
+    // res.send('hello');
+
+    response.answer = true;
+    res.send(JSON.stringify(response));
+})
+
+// new function to get the data from text file and send to client
+// just read file
+// app.get()
+app.get('/getData', (req, res) => {
+
+    fs.readFile('posts.txt', 'utf8', function(err, data) {
+        var response = new Object();
+        response.answer = data;
+        res.send(JSON.stringify(response));
+    });
+
+
+})
+
+app.use('/', express.static('pages'));
+
+app.listen(PORT, HOST);
+
+console.log('up and running');
+
 
 
 
