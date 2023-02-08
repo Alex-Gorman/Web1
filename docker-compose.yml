@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  node1:
+    build: .
+    container_name: node1
+    ports:
+    - "80:8080"
+    volumes:
+    - /home/alex/cmpt353/asn2/:usr/scr/app
+    stdin_open: true
+    tty: true
